@@ -20,14 +20,17 @@ Hostname    = %s
 Environment = %s
 ```
 FORMAT
+    color = nil
 
     if self.status == "changed"
       pretxt = ":congratulations: #{pretxt}"
+      color = 'good'
     else
       pretxt = ":warning: #{pretxt}"
+      color = 'warning'
     end
 
-    payload = make_payload(pretxt, message)
+    payload = make_payload(pretxt, message, color)
 
     @config["channels"].each do |channel|
       channel.gsub!(/^\\/, '')
@@ -46,6 +49,7 @@ FORMAT
           "pretext" => pretxt,
           "text"    => message,
           "mrkdwn_in" => [:text, :pretext],
+          "color"   => color,
         }],
     }
   end
