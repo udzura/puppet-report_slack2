@@ -1,2 +1,2 @@
-class report_slack {
+class report_slack2 {
 }
