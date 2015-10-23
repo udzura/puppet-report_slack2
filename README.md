@@ -6,7 +6,7 @@ Yet another slack report processor.
 * https://github.com/udzura/puppet-report_slack2
 * https://forge.puppetlabs.com/udzura/report_slack2
 
-![screen](./screem.png)
+![screen](./screen.png)
 
 ## Install && setup
 
