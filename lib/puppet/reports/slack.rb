@@ -12,8 +12,6 @@ Puppet::Reports.register_report(:slack) do
 
     @config = YAML.load_file(configfile)
 
-    return if self.status == "unchanged"
-
     @config["statuses"] ||= "failed"
     statuses = @config["statuses"].split(",")
 
@@ -30,11 +28,18 @@ Run Environment    = %s
     color = nil
 
     if statuses.include?(self.status)
-      if self.status == "changed"
+      case self.status
+      when "changed"
         pretxt = ":congratulations: #{pretxt}"
         color = 'good'
-      else
+      when "failed"
         pretxt = ":warning: #{pretxt}"
+        color = 'warning'
+      when "unchanged"
+        pretxt = ":zzz: #{pretxt}"
+        color = '#cccccc'
+      else
+        pretxt = ":grey_question: #{pretxt}"
         color = 'warning'
       end
 
