@@ -14,6 +14,9 @@ Puppet::Reports.register_report(:slack) do
 
     return if self.status == "unchanged"
 
+    @config["statuses"] ||= "failed"
+    statuses = @config["statuses"].split(",")
+
     # Kernel#` should always run on puppetserver host
     puppetmaster_hostname = `hostname`.chomp
     pretxt = "Puppet status: *%s*" % self.status
@@ -26,21 +29,23 @@ Run Environment    = %s
     FORMAT
     color = nil
 
-    if self.status == "changed"
-      pretxt = ":congratulations: #{pretxt}"
-      color = 'good'
-    else
-      pretxt = ":warning: #{pretxt}"
-      color = 'warning'
-    end
+    if statuses.include?(self.status)
+      if self.status == "changed"
+        pretxt = ":congratulations: #{pretxt}"
+        color = 'good'
+      else
+        pretxt = ":warning: #{pretxt}"
+        color = 'warning'
+      end
 
-    payload = make_payload(pretxt, message, color)
+      payload = make_payload(pretxt, message, color)
 
-    @config["channels"].each do |channel|
-      channel.gsub!(/^\\/, '')
-      _payload = payload.merge("channel" => channel)
-      post_to_webhook(URI.parse(@config["webhook"]), _payload)
-      Puppet.notice("Notification sent to slack channel: #{channel}")
+      @config["channels"].each do |channel|
+        channel.gsub!(/^\\/, '')
+        _payload = payload.merge("channel" => channel)
+        post_to_webhook(URI.parse(@config["webhook"]), _payload)
+        Puppet.notice("Notification sent to slack channel: #{channel}")
+      end
     end
   end
 
