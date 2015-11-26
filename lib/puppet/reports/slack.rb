@@ -12,7 +12,7 @@ Puppet::Reports.register_report(:slack) do
 
     @config = YAML.load_file(configfile)
 
-    @config["statuses"] ||= "failed"
+    @config["statuses"] ||= "changed,failed"
     statuses = @config["statuses"].split(",")
 
     # Kernel#` should always run on puppetserver host
