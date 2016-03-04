@@ -25,6 +25,7 @@ Provisioned Host   = %s
 Run Environment    = %s
 ```
     FORMAT
+    message.strip!
     color = nil
 
     if statuses.include?(self.status)
