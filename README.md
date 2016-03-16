@@ -35,8 +35,8 @@ Puppet way, like this:
 $slack = {
   username => "puppet reporter",
   webhook  => "https://hooks.slack.com/services/YOUR/incoming-web-hook/AddRess!!!",
-  channels => ["#udzura_dev"]
-  report_url: 'https://puppetdashboard.example.jp/reports'
+  channels => ["#udzura_dev"],
+  report_url => 'https://puppetdashboard.example.jp/reports'
 }
 
 file {
