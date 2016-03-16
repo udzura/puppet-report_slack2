@@ -14,17 +14,32 @@ Puppet::Reports.register_report(:slack) do
 
     @config["statuses"] ||= "changed,failed"
     statuses = @config["statuses"].split(",")
+    report_url = @config["report_url"]
+    if report_url.include? '%h'
+      report_url ["%h"] = self.host
+    end
 
     # Kernel#` should always run on puppetserver host
     puppetmaster_hostname = `hostname`.chomp
     pretxt = "Puppet status: *%s*" % self.status
-    message = <<-FORMAT % [puppetmaster_hostname, self.host, self.environment]
+    if !report_url.to_s.empty?
+      message = <<-FORMAT % [puppetmaster_hostname, self.host, self.environment, report_url]
+```
+Puppet Master Host = %s
+Provisioned Host   = %s
+Run Environment    = %s
+Report Link        = %s
+```
+      FORMAT
+    else
+      message = <<-FORMAT % [puppetmaster_hostname, self.host, self.environment]
 ```
 Puppet Master Host = %s
 Provisioned Host   = %s
 Run Environment    = %s
 ```
     FORMAT
+    end
     message.strip!
     color = nil
 
