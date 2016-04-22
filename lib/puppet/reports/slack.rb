@@ -14,7 +14,7 @@ Puppet::Reports.register_report(:slack) do
 
     @config["statuses"] ||= "changed,failed"
     statuses = @config["statuses"].split(",")
-    report_url = @config["report_url"]
+    report_url = @config["report_url"] || ''
     if report_url.include? '%h'
       report_url ["%h"] = self.host
     end
