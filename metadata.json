@@ -1,6 +1,6 @@
 {
   "name": "udzura-report_slack2",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "author": "Uchio Kondo",
   "summary": "Yet another slack report processor",
   "license": "MIT",
