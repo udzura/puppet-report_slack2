@@ -26,6 +26,7 @@ webhook: "https://hooks.slack.com/services/YOUR/incoming-web-hook/AddRess!!!"
 channels: 
   - "#udzura_dev"
 report_url: 'https://puppetdashboard.example.jp/reports'
+http_proxy: 'http://proxy.example.com:3128' # Optionally specify an http proxy to use when posting to slack.
 
 ```
 

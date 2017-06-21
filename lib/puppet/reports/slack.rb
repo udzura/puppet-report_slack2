@@ -64,7 +64,7 @@ Run Environment    = %s
       @config["channels"].each do |channel|
         channel.gsub!(/^\\/, '')
         _payload = payload.merge("channel" => channel)
-        post_to_webhook(URI.parse(@config["webhook"]), _payload)
+        post_to_webhook(URI.parse(@config["webhook"]), _payload, @config['http_proxy'])
         Puppet.notice("Notification sent to slack channel: #{channel}")
       end
     end
@@ -84,8 +84,13 @@ Run Environment    = %s
     }
   end
 
-  def post_to_webhook(uri, payload)
-    https = Net::HTTP.new(uri.host, 443)
+  def post_to_webhook(uri, payload, proxy_address)
+    if proxy_address
+      proxy_uri = URI(proxy_address)
+      https = Net::HTTP.new(uri.host, 443, proxy_uri.hostname, proxy_uri.port)
+    else
+      https = Net::HTTP.new(uri.host, 443)
+    end
     https.use_ssl = true
     r = https.start do |https|
       https.post(uri.path, payload.to_json)
@@ -94,7 +99,7 @@ Run Environment    = %s
     when Net::HTTPSuccess
       return
     else
-      Puppet.err("Notification sent faild to slack channel: #{channel}")
+      Puppet.err("Notification to slack channel #{payload['channel']} failed with #{r}")
     end
   end
 end
