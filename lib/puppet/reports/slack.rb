@@ -1,5 +1,4 @@
 require 'puppet'
-require 'puppet/network/http_pool'
 require 'net/https'
 require 'uri'
 require 'json'
