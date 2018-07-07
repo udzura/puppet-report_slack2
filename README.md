@@ -20,10 +20,10 @@ puppet module install udzura-report_slack2
 Create config file `/etc/puppet/slack.yaml` as:
 
 ```yaml
---- 
+---
 username: "puppet reporter"
 webhook: "https://hooks.slack.com/services/YOUR/incoming-web-hook/AddRess!!!"
-channels: 
+channels:
   - "#udzura_dev"
 report_url: 'https://puppetdashboard.example.jp/reports'
 
@@ -32,16 +32,12 @@ report_url: 'https://puppetdashboard.example.jp/reports'
 Puppet way, like this:
 
 ```puppet
-$slack = {
-  username => "puppet reporter",
-  webhook  => "https://hooks.slack.com/services/YOUR/incoming-web-hook/AddRess!!!",
-  channels => ["#udzura_dev"],
-  report_url => 'https://puppetdashboard.example.jp/reports'
-}
 
-file {
-  '/etc/puppet/slack.yaml':
-    content => inline_template("<%= YAML.dump(@slack) %>")
+class { 'report_slack2' :
+  username   => 'puppet reporter',
+  webhook    => 'https://hooks.slack.com/services/YOUR/incoming-web-hook/AddRess!!!',
+  channels   => [ "#udzura_dev" ],
+  report_url => 'https://puppetdashboard.example.jp/reports',
 }
 ```
 
