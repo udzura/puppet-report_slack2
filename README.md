@@ -77,6 +77,21 @@ reports_url: 'https://puppetdashboard.example.jp/%h/reports'
 ```
 
 The above translates to something like https://puppetdashboard.example.jp/app001.example.jp/reports
+
+## Change what you want to notify
+
+If you want to notify only failed status, you can set slack.yaml like the following:
+
+```yaml
+statuses: 'failed'
+```
+
+or, you want to notify all statuses, set like the following:
+
+```yaml
+statuses: 'changed,failed,unchanged'
+```
+
 ## See also
 
 * https://github.com/lamanotrama/puppet-report-ikachan
