@@ -18,8 +18,8 @@ Puppet::Reports.register_report(:slack) do
       report_url ["%h"] = self.host
     end
 
-    # Kernel#` should always run on puppetserver host
-    puppetmaster_hostname = `hostname`.chomp
+    # See https://tickets.puppetlabs.com/browse/SERVER-2166
+    puppetmaster_hostname = Puppet::Util::Execution.execute('/bin/hostname').chomp
     pretxt = "Puppet status: *%s*" % self.status
     if !report_url.to_s.empty?
       message = <<-FORMAT % [puppetmaster_hostname, self.host, self.environment, report_url]
