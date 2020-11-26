@@ -21,6 +21,7 @@ Puppet::Reports.register_report(:slack) do
     # See https://tickets.puppetlabs.com/browse/SERVER-2166
     puppetmaster_hostname = Puppet::Util::Execution.execute('/bin/hostname').chomp
     pretxt = "Puppet status: *%s*" % self.status
+    pretxt += " (noop)" if self.noop_pending
     if !report_url.to_s.empty?
       message = <<-FORMAT % [puppetmaster_hostname, self.host, self.environment, report_url]
 ```
