@@ -7,12 +7,42 @@
   "source": "https://github.com/udzura/puppet-report_slack2.git",
   "project_page": "https://github.com/udzura/puppet-report_slack2",
   "issues_url": "https://github.com/udzura/puppet-report_slack2/issues",
-  "tags": ["slack", "chatops", "reporter"],
-  "dependencies": [],
+  "dependencies": [
+
+  ],
   "operatingsystem_support": [
-    { "operatingsystem":"Centos",
-      "operatingsystemrelease":[ "5.0", "6.0", "7.0", "8.0" ] },
-    { "operatingsystem": "Ubuntu",
-      "operatingsystemrelease": [ "12.04", "14.04", "16.04", "18.04", "20.04" ] }
-  ]
+    {
+      "operatingsystem": "Centos",
+      "operatingsystemrelease": [
+        "5.0",
+        "6.0",
+        "7.0",
+        "8.0"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "12.04",
+        "14.04",
+        "16.04",
+        "18.04",
+        "20.04"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.10.0 < 7.0.0"
+    }
+  ],
+  "tags": [
+    "slack",
+    "chatops",
+    "reporter"
+  ],
+  "pdk-version": "1.18.1",
+  "template-url": "pdk-default#1.18.1",
+  "template-ref": "tags/1.18.1-0-g3d2e75c"
 }
